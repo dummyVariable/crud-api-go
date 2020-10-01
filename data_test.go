@@ -8,7 +8,7 @@ func Test_data_add(t *testing.T) {
 		{2, "test2"},
 	}
 	for _, testcase := range tests {
-		addItem(testcase)
+		createItem(testcase)
 	}
 
 	if len(data) != 2 {
@@ -19,7 +19,7 @@ func Test_data_add(t *testing.T) {
 		t.Errorf("expected data to be {1, test1} got:%v", data[0])
 	}
 
-	if data[0].ID != 2 && data[0].Message != "test2" {
-		t.Errorf("expected data to be {2, test2} got:%v", data[0])
+	if data[1].ID != 2 && data[1].Message != "test2" {
+		t.Errorf("expected data to be {2, test2} got:%v", data[1])
 	}
 }

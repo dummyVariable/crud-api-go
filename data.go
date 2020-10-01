@@ -1,9 +1,13 @@
 package main
 
-//Data model for api
-type Data struct {
+//Item model for api
+type Item struct {
 	ID      int
 	Message string
 }
 
-var data []Data
+var data []Item
+
+func createItem(i Item) {
+	data = append(data, i)
+}
