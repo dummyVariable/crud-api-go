@@ -1,13 +1,15 @@
 package main
 
 //Item model for api
-type Item struct {
-	ID      int
-	Message string
+
+var data map[int]string
+var counter int
+
+func startDB() {
+	data = make(map[int]string)
 }
 
-var data []Item
-
-func createItem(i Item) {
-	data = append(data, i)
+func createItem(message string) {
+	counter++
+	data[counter] = message
 }
