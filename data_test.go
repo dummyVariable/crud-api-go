@@ -22,3 +22,20 @@ func Test_data_create(t *testing.T) {
 		t.Errorf("Expected data items to be 2; Got : %v", len(data))
 	}
 }
+
+func Test_for_read(t *testing.T) {
+
+	tests := []string{
+		"test1",
+		"test2",
+		"None",
+	}
+
+	for i, testcase := range tests {
+		id := i + 1
+		got := read(id)
+		if got != testcase {
+			t.Errorf("Expected %v but got %v", testcase, got)
+		}
+	}
+}
