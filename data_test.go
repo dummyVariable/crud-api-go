@@ -24,7 +24,6 @@ func Test_data_create(t *testing.T) {
 }
 
 func Test_for_read(t *testing.T) {
-
 	tests := []string{
 		"test1",
 		"test2",
@@ -33,7 +32,7 @@ func Test_for_read(t *testing.T) {
 
 	for i, testcase := range tests {
 		id := i + 1
-		got := read(id)
+		got := readItem(id)
 		if got != testcase {
 			t.Errorf("Expected %v but got %v", testcase, got)
 		}

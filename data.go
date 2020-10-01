@@ -13,3 +13,11 @@ func createItem(message string) {
 	counter++
 	data[counter] = message
 }
+
+func readItem(id int) string {
+	item := data[id]
+	if item == "" {
+		return "None"
+	}
+	return item
+}
