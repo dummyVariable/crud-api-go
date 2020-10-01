@@ -2,11 +2,15 @@ package main
 
 import "testing"
 
-func Test_data_add(t *testing.T) {
-	tests := []Item{
+func Test_data_create(t *testing.T) {
+	tests := []struct {
+		ID   int
+		item string
+	}{
 		{1, "test1"},
 		{2, "test2"},
 	}
+
 	for _, testcase := range tests {
 		createItem(testcase)
 	}
