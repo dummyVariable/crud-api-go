@@ -21,3 +21,13 @@ func readItem(id int) string {
 	}
 	return item
 }
+
+func updateItem(id int, message string) string {
+	item := data[id]
+	if item == "" {
+		return "None"
+	}
+
+	data[id] = message
+	return "Updated"
+}
