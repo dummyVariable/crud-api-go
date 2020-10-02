@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"io"
 	"net/http"
 	"net/http/httptest"
@@ -8,7 +9,7 @@ import (
 	"testing"
 )
 
-func Test_for_create(t *testing.T) {
+func Test_for_create_handler(t *testing.T) {
 	tests := []struct {
 		message io.Reader
 		status  int
@@ -31,4 +32,32 @@ func Test_for_create(t *testing.T) {
 
 	}
 
+}
+
+func Test_for_read_handler(t *testing.T) {
+	tests := []struct {
+		id      string
+		message string
+		status  int
+	}{
+		{"1", "first-message", http.StatusOK},
+		{"2", "second-message", http.StatusOK},
+		{"5", "None", http.StatusNotFound},
+	}
+	for _, testcase := range tests {
+		r := httptest.NewRequest("GET", "/"+testcase.id, nil)
+		w := httptest.NewRecorder()
+		readHandler(w, r)
+
+		resp := w.Result()
+		var item Item
+		json.Unmarshal(w.Body.Bytes(), &item)
+
+		if resp.StatusCode != testcase.status {
+			t.Error("error status expecting %v got %v at id %v", testcase.status, resp.StatusCode, testcase.id)
+		}
+		if item.Message != testcase.message {
+			t.Error("error status expecting %v got %v at id %v", testcase.status, item.Message, testcase.id)
+		}
+	}
 }
