@@ -13,7 +13,6 @@ func jsonResponseBuilder(i Item) []byte {
 }
 
 func createHandler(w http.ResponseWriter, r *http.Request) {
-	startDB()
 	len := r.ContentLength
 	body := make([]byte, len)
 	r.Body.Read(body)
@@ -25,12 +24,12 @@ func createHandler(w http.ResponseWriter, r *http.Request) {
 	} else {
 		createItem(item.Message)
 		w.WriteHeader(http.StatusOK)
+		w.Write(jsonResponseBuilder(Item{"Created"}))
 	}
 	return
 }
 
 func readHandler(w http.ResponseWriter, r *http.Request) {
-	startDB()
 	id, _ := strconv.Atoi(strings.TrimPrefix(r.URL.Path, "/"))
 	message := readItem(id)
 	if message == "None" {
@@ -46,7 +45,6 @@ func readHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func updateHandler(w http.ResponseWriter, r *http.Request) {
-	startDB()
 	id, _ := strconv.Atoi(strings.TrimPrefix(r.URL.Path, "/"))
 
 	len := r.ContentLength
@@ -69,7 +67,6 @@ func updateHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func deleteHandler(w http.ResponseWriter, r *http.Request) {
-	startDB()
 	id, _ := strconv.Atoi(strings.TrimPrefix(r.URL.Path, "/"))
 
 	res := deleteItem(id)
