@@ -83,7 +83,7 @@ func Test_for_update_handler(t *testing.T) {
 		var body []byte
 		resp.Body.Read(body)
 		if resp.StatusCode != testcase.status {
-			t.Errorf("Error at updating item expected :%v got %v %v", testcase.status, resp.StatusCode, body)
+			t.Errorf("Error at updating item expected :%v got %v %v", testcase.status, resp.StatusCode, testcase.id)
 		}
 
 	}
