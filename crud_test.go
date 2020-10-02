@@ -42,10 +42,11 @@ func Test_for_read_handler(t *testing.T) {
 	}{
 		{"1", "first-message", http.StatusOK},
 		{"2", "second-message", http.StatusOK},
-		{"5", "None", http.StatusNotFound},
+		{"5", "No message found", http.StatusNotFound},
 	}
 	for _, testcase := range tests {
-		r := httptest.NewRequest("GET", "/"+testcase.id, nil)
+		url := "/" + testcase.id
+		r := httptest.NewRequest("GET", url, nil)
 		w := httptest.NewRecorder()
 		readHandler(w, r)
 
@@ -54,10 +55,10 @@ func Test_for_read_handler(t *testing.T) {
 		json.Unmarshal(w.Body.Bytes(), &item)
 
 		if resp.StatusCode != testcase.status {
-			t.Error("error status expecting %v got %v at id %v", testcase.status, resp.StatusCode, testcase.id)
+			t.Errorf("error status expecting %v got %v at id %v", testcase.status, resp.StatusCode, testcase.id)
 		}
 		if item.Message != testcase.message {
-			t.Error("error status expecting %v got %v at id %v", testcase.status, item.Message, testcase.id)
+			t.Errorf("error status expecting %v got %v at id %v", testcase.status, item.Message, testcase.id)
 		}
 	}
 }
