@@ -1,12 +1,18 @@
 package main
 
 //Item model for api
+type Item struct {
+	Message string `json:"message"`
+}
 
 var data map[int]string
 var counter int
 
 func startDB() {
 	data = make(map[int]string)
+	createItem("first-message")
+	createItem("second-message")
+
 }
 
 func createItem(message string) {
@@ -27,7 +33,9 @@ func updateItem(id int, message string) string {
 	if !present {
 		return "None"
 	}
-
+	if message == "" {
+		return "None"
+	}
 	data[id] = message
 	return "Updated"
 }
