@@ -2,7 +2,7 @@ package main
 
 import "testing"
 
-func Test_data_create(t *testing.T) {
+func Test_for_create(t *testing.T) {
 	startDB()
 
 	tests := []struct {
@@ -60,6 +60,10 @@ func Test_for_update(t *testing.T) {
 			t.Errorf("cannot update the item at ID %v", testcase.ID)
 		}
 
+	}
+	got := readItem(1)
+	if got != "test1updated" {
+		t.Errorf("Failed updating at %v expected %v got %v", 1, "test1updated", got)
 	}
 }
 

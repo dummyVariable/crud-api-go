@@ -10,6 +10,8 @@ import (
 )
 
 func Test_for_create_handler(t *testing.T) {
+	startDB()
+
 	tests := []struct {
 		message io.Reader
 		status  int
@@ -35,6 +37,7 @@ func Test_for_create_handler(t *testing.T) {
 }
 
 func Test_for_read_handler(t *testing.T) {
+
 	tests := []struct {
 		id      string
 		message string
