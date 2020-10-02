@@ -23,11 +23,20 @@ func readItem(id int) string {
 }
 
 func updateItem(id int, message string) string {
-	item := data[id]
-	if item == "" {
+	_, present := data[id]
+	if !present {
 		return "None"
 	}
 
 	data[id] = message
 	return "Updated"
+}
+
+func deleteItem(id int) string {
+	_, present := data[id]
+	if !present {
+		return "None"
+	}
+	delete(data, id)
+	return "Deleted"
 }
