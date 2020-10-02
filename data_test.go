@@ -62,3 +62,21 @@ func Test_for_update(t *testing.T) {
 
 	}
 }
+
+func Test_for_delete(t *testing.T) {
+	tests := []struct {
+		ID     int
+		status string
+	}{
+		{1, "Deleted"},
+		{5, "None"},
+	}
+
+	for _, testcase := range tests {
+		got := deleteItem(testcase.ID)
+
+		if got != testcase.status {
+			t.Errorf("cannot delete item at %v", testcase.ID)
+		}
+	}
+}
