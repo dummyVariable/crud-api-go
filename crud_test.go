@@ -62,3 +62,29 @@ func Test_for_read_handler(t *testing.T) {
 		}
 	}
 }
+
+func Test_for_update_handler(t *testing.T) {
+	tests := []struct {
+		id      string
+		message io.Reader
+		status  int
+	}{
+		{"1", strings.NewReader(`{"message" : "new-first-message"}`), http.StatusOK},
+		{"2", strings.NewReader(`{"messag" : "mis-message"}`), http.StatusUnprocessableEntity},
+		{"2", strings.NewReader(`{"message" : "second-message"}`), http.StatusOK},
+	}
+	for _, testcase := range tests {
+		url := "/" + testcase.id
+		r := httptest.NewRequest("GET", url, testcase.message)
+		w := httptest.NewRecorder()
+		updateHandler(w, r)
+
+		resp := w.Result()
+		var body []byte
+		resp.Body.Read(body)
+		if resp.StatusCode != testcase.status {
+			t.Errorf("Error at updating item expected :%v got %v %v", testcase.status, resp.StatusCode, body)
+		}
+
+	}
+}
