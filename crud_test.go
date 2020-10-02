@@ -95,7 +95,7 @@ func Test_for_delete_handler(t *testing.T) {
 		message string
 		status  int
 	}{
-		{"1", "deleted", http.StatusOK},
+		{"1", "Deleted", http.StatusOK},
 		{"5", "No message found", http.StatusNotFound},
 	}
 	for _, testcase := range tests {
@@ -112,7 +112,7 @@ func Test_for_delete_handler(t *testing.T) {
 			t.Errorf("error status expecting %v got %v at id %v", testcase.status, resp.StatusCode, testcase.id)
 		}
 		if item.Message != testcase.message {
-			t.Errorf("error status expecting %v got %v at id %v", testcase.status, item.Message, testcase.id)
+			t.Errorf("error status expecting %v got %v at id %v", testcase.message, item.Message, testcase.id)
 		}
 	}
 }

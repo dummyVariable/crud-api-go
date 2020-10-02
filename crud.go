@@ -67,3 +67,20 @@ func updateHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	return
 }
+
+func deleteHandler(w http.ResponseWriter, r *http.Request) {
+	startDB()
+	id, _ := strconv.Atoi(strings.TrimPrefix(r.URL.Path, "/"))
+
+	res := deleteItem(id)
+
+	if res == "None" {
+		w.WriteHeader(http.StatusNotFound)
+		i := Item{"No message found"}
+		w.Write(jsonResponseBuilder(i))
+	} else {
+		w.WriteHeader(http.StatusOK)
+		w.Write(jsonResponseBuilder(Item{res}))
+	}
+	return
+}
