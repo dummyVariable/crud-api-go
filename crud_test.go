@@ -75,7 +75,7 @@ func Test_for_update_handler(t *testing.T) {
 	}
 	for _, testcase := range tests {
 		url := "/" + testcase.id
-		r := httptest.NewRequest("GET", url, testcase.message)
+		r := httptest.NewRequest("PUT", url, testcase.message)
 		w := httptest.NewRecorder()
 		updateHandler(w, r)
 
@@ -86,5 +86,33 @@ func Test_for_update_handler(t *testing.T) {
 			t.Errorf("Error at updating item expected :%v got %v %v", testcase.status, resp.StatusCode, testcase.id)
 		}
 
+	}
+}
+
+func Test_for_delete_handler(t *testing.T) {
+	tests := []struct {
+		id      string
+		message string
+		status  int
+	}{
+		{"1", "deleted", http.StatusOK},
+		{"5", "No message found", http.StatusNotFound},
+	}
+	for _, testcase := range tests {
+		url := "/" + testcase.id
+		r := httptest.NewRequest("DELETE", url, nil)
+		w := httptest.NewRecorder()
+		deleteHandler(w, r)
+
+		resp := w.Result()
+		var item Item
+		json.Unmarshal(w.Body.Bytes(), &item)
+
+		if resp.StatusCode != testcase.status {
+			t.Errorf("error status expecting %v got %v at id %v", testcase.status, resp.StatusCode, testcase.id)
+		}
+		if item.Message != testcase.message {
+			t.Errorf("error status expecting %v got %v at id %v", testcase.status, item.Message, testcase.id)
+		}
 	}
 }
